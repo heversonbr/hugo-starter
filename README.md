@@ -1,2 +1,2 @@
 # hugo-starter
-A generic deployer for Hugo
+A generic bash deployer for Hugo
