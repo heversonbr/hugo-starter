@@ -1,0 +1,178 @@
+= Notes: Using HUGO to build static websites
+
+== Introduction
+
+This is a quick recap of HUGO.
+
+=== Quick start overview 
+
+* Create new site
+
+----
+$ hugo new site <site_name>
+----
+
+* Add a theme
+
+----
+$ cd <site_name>
+$ git init
+$ git submodule add <theme_link> <themes/theme_name>
+----
+
+
+* Add the theme to the site configuration
+
+----
+$ echo theme = \"<theme_name>\" >> config.toml
+----
+
+* Add new content
+
+You can manually create content files (for example as content/<CATEGORY>/<FILE>.<FORMAT>) and provide metadata in them, however you can use the new command to do it for you: 
+
+----
+$ hugo new <category>/<file_name>.md
+----
+
+* Start hugo server 
+
+----
+$ hugo server -D
+----
+
+
+=== Installing Hugo in macos
+
+----
+$ brew install hugo
+----
+
+=== Generating home page 
+
+I create the script `init_new_hugo_site.sh` that executes the steps for creating an website based on Hugo themes.  The script requires two arguments:  `<website title>` and `<link to hugo theme>`. 
+
+NOTE: themes can be found here https://themes.gohugo.io/
+
+.example: 
+----
+$ ./init_new_hugo_site.sh myPersonalSite https://github.com/calintat/minimal.git
+----
+
+
+The script performs the following main steps in order to create a website: 
+
+. Create a new site: 
+----
+$ hugo new site <site_name>
+----
+
+. Add a theme: 
+
+----
+$ cd <site_name>
+$ git init
+$ git submodule add <link_to_hugo_theme> 
+----
+
+. Copy example site content and config to site root
+
+---- 
+$ cp themes/$THEME_NAME/exampleSite/config.toml .
+cp -Rf themes/$THEME_NAME/exampleSite/content .
+----
+
+. Start hugo server 
+----
+$ hugo server -D
+----
+
+This steps should give you a website running with the default example of the choosen theme.
+
+NOTE: check the script `init_new_hugo_site.sh` that helps with these first steps.
+
+
+== Hugo directory structure
+
+Hugo organizes the project files and directories as follows.
+
+* *config.toml* holds the site configuration. 
+
+----
+.
+├── archetypes
+├── config.toml
+├── content
+├── data
+├── layouts
+├── static
+└── themes
+----
+
+
+* *archetypes*
++
+Archetypes are templates used when creating new content. You can create new content files in Hugo using the `hugo new` command. By default, Hugo will create new content files with at least date, title (inferred from the file name), and draft = true. This saves time and promotes consistency for sites using multiple content types. You can create your own *archetypes* with custom preconfigured front matter fields as well.
++
+The `hugo new` command uses the `content-section` to find the most suitable archetype template in your project.
++
+.example: hugo new command
+----
+$ hugo new <category>/<file_name>.md
+----
++
+When we use `hugo new` as shown above, a new content file in content/<category>/<file_name>.md using the first archetype file found in this order:
++
+. archetypes/<category>.md
+. archetypes/default.md
+. themes/<my-theme>/archetypes/<category>.md
+. themes/<my-theme>/archetypes/default.md
+
+
+* *config*
++
+Hugo ships with a large number of configuration directives. The config directory is where those directives are stored as JSON, YAML, or TOML files. Every root setting object can stand as its own file and structured by environments. Projects with minimal settings and no need for environment awareness can use a single config.toml file at its root.
++
+Many sites may need little to no configuration, but Hugo ships with a large number of configuration directives for more granular directions on how you want Hugo to build your website. Note: config directory is not created by default.
+
+* *content*
++
+All content for your website will live inside this directory. *Each top-level folder is a content section*. 
++
+For example, if your site has three main sections (e.g., blog, articles, and tutorials) you will have three directories at `content/blog`, `content/articles`, and `content/tutorials`. Hugo uses sections to assign default content types.
+
+* *layouts*
++ 
+Stores *templates* in the form of .html files that specify how views of your content will be rendered into a static website. Templates include _list pages_, your _homepage_, _taxonomy templates_, _partials_, _single page templates_, and more.
+
+* *static*
++
+Stores all the static content: images, CSS, JavaScript, etc. When Hugo builds your site, all assets inside your static directory are copied over as-is. A good example of using the static folder is for verifying site ownership on Google Search Console, where you want Hugo to copy over a complete HTML file without modifying its content.
+
+* *data*
++
+This directory is used to store configuration files that can be used by Hugo when generating your website. You can write these files in YAML, JSON, or TOML format. In addition to the files you add to this folder, you can also create data templates that pull from dynamic content.
+
+* *public* 
++ 
+This is the directory where hugo builds the website to be published. 
+
+
+== Hugo Templates
+
+Hugo uses Go’s html/template and text/template libraries as the basis for the templating. 
+Go Templates provide an extremely simple template language that adheres to the belief that only the most basic of logic belongs in the template or view layer.
+
+Go Templates are HTML files with the addition of variables and functions. Go Template variables and functions are accessible within {{ }}.
+
+
+
+== Customizing your site 
+
+
+
+
+
+
+
+

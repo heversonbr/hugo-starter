@@ -1,4 +1,4 @@
-# Hugo Starter
+# hugo starter
 
 This is a generic bash to initiate a website based on Hugo.
 A simple set of commands that follows the Hugo's init command.
