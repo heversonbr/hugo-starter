@@ -1,7 +1,9 @@
 #!/bin/bash
+# Author: Heverson B. Ribeiro
+# Script that helps to create a new site based on HUGO. 
 
-# confirm before execute 
 function confirm_to_execute() {
+
     while(true); do 
         read -p "Execute next step (y/n/a)?" -n 1 -r
         # -n nchars:  Stop reading after an integer number nchars characters are read, if the line delimiter has not been reached.
@@ -23,7 +25,6 @@ function confirm_to_execute() {
     done
 }
 
-# shows correct usage
 function usage(){
     echo "-------------------------------------------------------------------------------"
     echo "USAGE:  Inform exactly:"
@@ -32,7 +33,7 @@ function usage(){
     echo "-------------------------------------------------------------------------------"
 }
 
-# checks number of arguments
+# check number of arguments
 if [ $# -eq 0 ]; then
     echo "-------------------------------------------------------------------------------"
     echo "No arguments informed!"
@@ -142,10 +143,12 @@ fi
 echo "------------------------------------------------------------------------"
 echo "[INFO] Config Done!"
 echo "------------------------------------------------------------------------"
+# copy 'utils' scripts.
+cp -p ../utils/*.sh . 
+cp -p ../utils/base_env_file ./.env
+
 echo "[INFO] Current Dir: `pwd`" 
 echo "Start hugo server? "
-
-#CMD=`hugo server -D`
 echo "[CMD] : hugo server -D"
 confirm_to_execute
 if [ "$?" == "0" ]; then
