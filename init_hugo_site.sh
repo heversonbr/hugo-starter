@@ -145,7 +145,7 @@ echo "[INFO] Config Done!"
 echo "------------------------------------------------------------------------"
 # copy 'utils' scripts.
 cp -p ../utils/*.sh . 
-cp -p ../utils/base_env_file ./.env
+cp -p ../utils/template_env_file ./.env
 
 echo "[INFO] Current Dir: `pwd`" 
 echo "Start hugo server? "
